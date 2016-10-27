@@ -1,0 +1,22 @@
+{
+  "bridge": {
+    "name": "Homebridge",
+    "username": "CC:22:3D:E3:CE:30",
+    "port": 51826,
+    "pin": "031-45-154"
+  },
+
+  "platforms": [{
+    "platform": "FHEM",
+    "name": "FHEM",
+    "server": "127.0.0.1",
+    "port": "8083"
+  }],
+
+  "accessories": [{
+    "accessory": "DhtSensor",
+    "name": "Sensor",
+    "sensorType": 22,
+    "gpioPin": 17
+  }]
+}
