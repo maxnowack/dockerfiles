@@ -11,6 +11,9 @@
     "name": "FHEM",
     "server": "127.0.0.1",
     "port": "8083"
+  }, {
+    "platform" : "yeelight",
+    "name" : "yeelight"
   }],
 
   "accessories": [{
@@ -18,5 +21,9 @@
     "name": "Sensor",
     "sensorType": 22,
     "gpioPin": 17
+  }, {
+    "accessory": "EQ3-Thermostat",
+    "name": "Thermostat",
+    "address": "00:1a:22:07:48:7f"
   }]
 }

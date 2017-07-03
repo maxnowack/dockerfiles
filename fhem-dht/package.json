@@ -1,0 +1,14 @@
+{
+  "name": "fhem-dht",
+  "version": "1.0.0",
+  "description": "send dht data to fhem",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE=production node app.js"
+  },
+  "author": "Max Nowack <max@unsou.de>",
+  "license": "MIT",
+  "dependencies": {
+    "node-dht-sensor": "0.0.29"
+  }
+}

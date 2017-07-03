@@ -1,0 +1,15 @@
+{
+  "name": "templogger",
+  "version": "1.0.0",
+  "description": "log temperature and humidity in influxdb",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=production node app.js"
+  },
+  "author": "Max Nowack <max@unsou.de>",
+  "license": "MIT",
+  "dependencies": {
+    "influx": "5.0.4",
+    "node-dht-sensor": "0.0.32"
+  }
+}
