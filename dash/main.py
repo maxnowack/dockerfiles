@@ -1,9 +1,11 @@
 import datetime
 import logging
 import urllib2
+import os
 
 # Constants
 timespan_threshhold = 3
+url = os.environ.get('DASH_URL')
 
 # Globals
 lastpress = datetime.datetime(1970,1,1)
@@ -19,7 +21,7 @@ def button_pressed_dash1():
   if timespan.total_seconds() > timespan_threshhold:
     current_time = datetime.datetime.strftime(thistime, '%Y-%m-%d %H:%M:%S')
     print 'Dash button pressed at ' + current_time
-    urllib2.urlopen('http://127.0.0.1:8083/fhem?cmd=set%20livingroom_chainedlights%20toggle')
+    urllib2.urlopen(url)
 
   lastpress = thistime
 
