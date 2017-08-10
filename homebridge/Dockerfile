@@ -18,4 +18,4 @@ RUN npm i -g --unsafe-perm homebridge-fhem
 RUN npm i -g --unsafe-perm homebridge-dht-sensor@2.1.2
 RUN npm i -g --unsafe-perm homebridge-eq3ble@1.3.2
 RUN npm i -g --unsafe-perm homebridge-yeelight
-ADD config.json ~/.homebridge/config.json
+ADD config.json /root/.homebridge/config.json

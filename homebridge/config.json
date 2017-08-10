@@ -16,14 +16,5 @@
     "name" : "yeelight"
   }],
 
-  "accessories": [{
-    "accessory": "DhtSensor",
-    "name": "Sensor",
-    "sensorType": 22,
-    "gpioPin": 17
-  }, {
-    "accessory": "EQ3-Thermostat",
-    "name": "Thermostat",
-    "address": "00:1a:22:07:48:7f"
-  }]
+  "accessories": []
 }
