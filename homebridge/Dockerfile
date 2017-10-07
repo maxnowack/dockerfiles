@@ -1,4 +1,4 @@
-FROM spybyte/rpi-homebridge
+FROM rpi-homebridge
 MAINTAINER Max Nowack <max@unsou.de>
 
 EXPOSE 2001 5353 9090 51826
@@ -16,6 +16,6 @@ WORKDIR /usr/local/homebridge
 
 RUN npm i -g --unsafe-perm homebridge-fhem
 RUN npm i -g --unsafe-perm homebridge-dht-sensor@2.1.2
-RUN npm i -g --unsafe-perm homebridge-eq3ble@1.3.2
+RUN npm i -g --unsafe-perm homebridge-platform-eq3btsmart@1.0.0
 RUN npm i -g --unsafe-perm homebridge-yeelight
 ADD config.json /root/.homebridge/config.json
