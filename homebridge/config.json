@@ -15,7 +15,19 @@
     "platform" : "yeelight",
     "name" : "yeelight"
   }, {
-    "platform": "eq3BTSmart"
+    "platform": "EQ3BLE"
+  }, {
+  "platform": "AmazonDash",
+    "buttons": [
+      {
+        "name": "Dash 1",
+        "mac": "ac:63:be:e9:0f:4f"
+      },
+      {
+        "name": "Dash 2",
+        "mac": "b4:7c:9c:01:60:f3"
+      }
+    ]
   }],
 
   "accessories": []

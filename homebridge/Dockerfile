@@ -1,9 +1,9 @@
-FROM rpi-homebridge
+FROM registry.server.unsou.de/rpi-homebridge
 MAINTAINER Max Nowack <max@unsou.de>
 
 EXPOSE 2001 5353 9090 51826
 
-RUN apt-get update && apt-get install wget make gcc libavahi-compat-libdnssd-dev libbluetooth-dev libcap2-bin
+RUN apt-get update && apt-get install wget make gcc libavahi-compat-libdnssd-dev libbluetooth-dev libcap2-bin libpcap-dev
 RUN npm i -g --unsafe-perm noble
 RUN setcap cap_net_raw+eip $(eval readlink -f `which node`)
 
@@ -16,6 +16,7 @@ WORKDIR /usr/local/homebridge
 
 RUN npm i -g --unsafe-perm homebridge-fhem
 RUN npm i -g --unsafe-perm homebridge-dht-sensor@2.1.2
-RUN npm i -g --unsafe-perm homebridge-platform-eq3btsmart@1.0.0
+RUN npm i -g --unsafe-perm homebridge-eq3ble@2.0.0-beta.0
 RUN npm i -g --unsafe-perm homebridge-yeelight
+RUN npm i -g --unsafe-perm homebridge-amazondash
 ADD config.json /root/.homebridge/config.json
