@@ -35,7 +35,7 @@ def udp_filter(pkt):
         mac_to_action[pkt.src]()
         break
 
-mac_to_action = {'ac:63:be:e9:0f:4f' : button_pressed_dash1}
+mac_to_action = {'ac:63:be:e9:0f:4f' : button_pressed_dash1, 'b4:7c:9c:01:60:f3': button_pressed_dash1}
 mac_id_list = list(mac_to_action.keys())
 
 print "Waiting for a button press..."
