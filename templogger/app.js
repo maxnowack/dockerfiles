@@ -1,26 +1,51 @@
 const sensorLib = require('node-dht-sensor')
-const http = require('http')
-const { InfluxDB, FieldType } = require('influx')
+const librato = require('librato-node')
 
-const influx = new InfluxDB({
-  host: '10.144.195.61',
-  database: 'metrics',
-  username: 'root',
-  password: '1nflux!',
-  schema: [{
-    measurement: 'temperature',
-    fields: { value: FieldType.FLOAT },
-    tags: ['device'],
-  }, {
-    measurement: 'humidity',
-    fields: { value: FieldType.FLOAT },
-    tags: ['device'],
-  }, {
-    measurement: 'vcc',
-    fields: { value: FieldType.FLOAT },
-    tags: ['device'],
-  }],
+const SENSOR_TYPE = parseInt(process.env.SENSOR_TYPE, 10) || 22
+const SENSOR_PIN = parseInt(process.env.SENSOR_PIN, 10)
+const INTERVAL = parseInt(process.env.INTERVAL, 10) || 10000
+const EMAIL = process.env.EMAIL
+const TOKEN = process.env.TOKEN
+const DEVICE = process.env.DEVICE
+
+if (![11, 22].includes(SENSOR_TYPE)) {
+  console.log('SENSOR_TYPE must be 11 or 22. Got', SENSOR_TYPE)
+  console.log('exiting …')
+  process.exit(1)
+}
+if (!SENSOR_PIN) {
+  console.log('SENSOR_PIN is missing.')
+  console.log('exiting …')
+  process.exit(1)
+}
+if (!isFinite(INTERVAL)) {
+  console.log('INTERVAL must be a valid number. Got', INTERVAL)
+  console.log('exiting …')
+  process.exit(1)
+}
+if (!DEVICE) {
+  console.log('DEVICE is missing.')
+  console.log('exiting …')
+  process.exit(1)
+}
+if (!EMAIL) {
+  console.log('EMAIL is missing.')
+  console.log('exiting …')
+  process.exit(1)
+}
+if (!TOKEN) {
+  console.log('TOKEN is missing.')
+  console.log('exiting …')
+  process.exit(1)
+}
+
+console.log('config loaded', {
+  SENSOR_TYPE,
+  SENSOR_PIN,
+  INTERVAL,
 })
+
+librato.configure({ email: EMAIL, token: TOKEN, period: 10000 })
 
 const getSensorData = (type, pin) => new Promise((resolve, reject) => {
   sensorLib.read(type, pin, (err, temperature, humidity) => {
@@ -32,53 +57,18 @@ const getSensorData = (type, pin) => new Promise((resolve, reject) => {
   })
 })
 
-const sendToInflux = (device, temperature, humidity, vcc) => {
-  const points = [{
-    measurement: 'temperature',
-    tags: { device },
-    fields: { value: temperature },
-  }, {
-    measurement: 'humidity',
-    tags: { device },
-    fields: { value: humidity },
-  }]
-  if (vcc) {
-    points.push({
-      measurement: 'vcc',
-      tags: { device },
-      fields: { value: vcc },
-    })
-  }
-
-  return influx.writePoints(points)
+const measure = ({ temperature, humidity }) => {
+  librato.measure(`${DEVICE}_temperature`, temperature)
+  librato.measure(`${DEVICE}_humidity`, humidity)
 }
 
-setInterval(() => {
-  getSensorData(22, 17)
-    .then(({ temperature, humidity }) => sendToInflux('livingroom_dht22', temperature, humidity))
-    .catch(err => console.error(err))
-}, 5000)
+const getData = () => getSensorData(SENSOR_TYPE, SENSOR_PIN)
+  .then(measure)
+  .then(() => setTimeout(getData, INTERVAL))
+  .catch((err) => {
+    console.log(err)
+    setTimeout(getData, INTERVAL)
+  })
 
-const server = http.createServer((req, res) => {
-  if (req.method == 'POST') {
-    var body = ''
-    req.on('data', (data) => { body += data })
-    req.on('end', () => {
-      res.writeHead(200, {'Content-Type': 'text/plain'})
-      res.end('')
-
-      const data = body && JSON.parse(body)
-      const { device, temperature, humidity } = data || {}
-      const vcc = ((data && data.vcc) || 0) / 1000
-      console.log('got data from', device, { temperature, humidity, vcc })
-      sendToInflux(device, temperature, humidity, vcc)
-    })
-  } else {
-    res.writeHead(200, {'Content-Type': 'text/plain'})
-    res.end('')
-  }
-})
-
-server.listen(2742)
-
-console.log('listening on port 2742');
+librato.start()
+getData()

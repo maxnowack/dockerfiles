@@ -9,7 +9,7 @@
   "author": "Max Nowack <max@unsou.de>",
   "license": "MIT",
   "dependencies": {
-    "influx": "5.0.4",
+    "librato-node": "4.1.0",
     "node-dht-sensor": "0.0.32"
   }
 }
