@@ -1,4 +1,4 @@
-FROM hypriot/rpi-node:6
+FROM hypriot/rpi-node:8
 MAINTAINER Spybyte <spybyte@online.de>
 
 EXPOSE 5353 51826

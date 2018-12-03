@@ -1,4 +1,4 @@
-FROM registry.server.unsou.de/rpi-homebridge
+FROM maxnowack/rpi-homebridge
 MAINTAINER Max Nowack <max@unsou.de>
 
 EXPOSE 2001 5353 9090 51826
@@ -16,7 +16,5 @@ WORKDIR /usr/local/homebridge
 
 RUN npm i -g --unsafe-perm homebridge-fhem
 RUN npm i -g --unsafe-perm homebridge-dht-sensor@2.1.2
-RUN npm i -g --unsafe-perm homebridge-eq3ble@2.0.0-beta.0
-RUN npm i -g --unsafe-perm homebridge-yeelight
-RUN npm i -g --unsafe-perm homebridge-amazondash
-ADD config.json /root/.homebridge/config.json
+RUN npm i -g --unsafe-perm homebridge-yeelight-wifi
+RUN npm i -g --unsafe-perm homebridge-alexa
