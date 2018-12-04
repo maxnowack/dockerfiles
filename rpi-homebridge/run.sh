@@ -10,4 +10,4 @@ avahi-daemon -D
 
 sleep 5
 
-homebridge
+homebridge -I
