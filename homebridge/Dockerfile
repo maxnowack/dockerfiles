@@ -16,7 +16,8 @@ WORKDIR /usr/local/homebridge
 
 RUN npm i -g --unsafe-perm homebridge-fhem
 RUN npm i -g --unsafe-perm homebridge-dht-sensor@2.1.2
-RUN npm i -g --unsafe-perm homebridge-yeelight-wifi
+RUN npm i -g --unsafe-perm homebridge-yeelight-platform
 RUN npm i -g --unsafe-perm homebridge-alexa
 RUN npm i -g --unsafe-perm homebridge-xbox-one
 RUN npm i -g --unsafe-perm homebridge-apple-tv
+RUN npm i -g --unsafe-perm homebridge-amazondash
